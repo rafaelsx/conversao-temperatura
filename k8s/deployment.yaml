@@ -1,0 +1,35 @@
+# App Conversão de Temperatura
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversaotempweb
+spec:
+  selector:
+    matchLabels:
+      app: conversaotempweb
+  template:
+    metadata:
+      labels:
+        app: conversaotempweb
+    spec:
+      containers:
+        - name: conversaotempweb
+          image: rafaelsx/conversao-temperatura:v1
+          ports:
+            - containerPort: 8080
+
+---
+
+# Service Conversão de Temperatura
+apiVersion: v1
+kind: Service
+metadata:
+  name: conversaotempweb
+spec:
+  selector:
+    app: conversaotempweb
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30000
+  type: NodePort
